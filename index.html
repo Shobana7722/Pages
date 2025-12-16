@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Vocabulary, Word Study, and Morphology — Page 1 (Fixed)</title>
+
+    <!-- Bootstrap 5 -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      :root {
+        --blue-600: #23408f;
+        --header-bg: #d3d9e9;
+        --table-border: #9e9d9d;
+        --grid-border: #b9b9b9;
+        --add-btn: #ec6b5e;
+        --input-bg: #f4f4f4;
+        --box-shadow: 0 4px 8px rgba(0, 0, 0, 0.06);
+        --oval-border: #f2b8b8;
+      }
+
+      html,
+      body {
+        height: 100%;
+        font-family: "Poppins", sans-serif;
+        color: #1b1b1b;
+        background: #fff;
+      }
+      .page-wrap {
+        max-width: 960px;
+        padding-left: 85px;
+        padding-right: 85px;
+        margin: 30px auto;
+      }
+      .top-accent {
+        height: 34px;
+        border-radius: 4px;
+        background: linear-gradient(
+          90deg,
+          #b34f9e 0%,
+          #ec6b5e 35%,
+          #b65b1f 100%
+        );
+        margin-bottom: 18px;
+      }
+
+      .freyer {
+        background: #fff;
+        padding: 22px;
+        border-radius: 8px;
+        border: 1px solid #eee;
+        box-shadow: var(--box-shadow);
+      }
+      .freyer .title-small {
+        font-weight: 600;
+        font-size: 14px;
+        color: var(--blue-600);
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+      }
+      .freyer .title-big {
+        font-size: 28px;
+        color: var(--blue-600);
+        font-weight: 400;
+        margin-top: 6px;
+      }
+      .freyer .desc {
+        font-size: 14px;
+        margin-bottom: 14px;
+        color: #333;
+      }
+
+      /* NEW: true 2x2 grid container for Freyer model */
+      .freyer-center-wrap {
+        position: relative;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 18px;
+        padding-top: 10px;
+        padding-bottom: 40px; /* space for oval overlap */
+      }
+
+      .fw-box {
+        min-height: 110px;
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        padding: 12px;
+        background: #fafafa;
+      }
+      .fw-box .label {
+        color: var(--blue-600);
+        font-weight: 700;
+        font-size: 18px;
+        margin-bottom: 6px;
+        display: block;
+      }
+      .fw-box textarea {
+        width: 100%;
+        min-height: 64px;
+        border-radius: 8px;
+        border: 1px solid #e6e6e6;
+        padding: 10px;
+        background: #fff;
+        resize: none;
+        font-size: 14px;
+      }
+
+      /* Center oval word (fixed) */
+      .word-oval {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 200px;
+        height: 56px;
+        border-radius: 40px;
+        background: #fff;
+        border: 2px solid var(--oval-border);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        color: var(--blue-600);
+        z-index: 30;
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.04);
+        pointer-events: none;
+      }
+
+      /* Right quick table */
+      .right-table {
+        border: 1px solid var(--table-border);
+        border-radius: 14px;
+        padding: 12px;
+        background: #fff;
+        font-size: 14px;
+        max-width: 240px;
+      }
+      .right-table .thead {
+        background: var(--header-bg);
+        color: var(--blue-600);
+        font-weight: 700;
+        padding: 8px;
+        border-radius: 10px;
+        font-size: 16px;
+      }
+
+      /* Suffixes and other sections */
+      .suffixes {
+        margin-top: 22px;
+        padding: 16px;
+        border-radius: 8px;
+        border: 1px dashed #e1e1e1;
+        background: #fff;
+      }
+      .suffixes .s-title {
+        font-weight: 600;
+        font-size: 24px;
+        letter-spacing: 1%;
+      }
+      .suffixes .subtitle {
+        font-size: 16px;
+        color: #444;
+        margin-bottom: 12px;
+      }
+      .suffix-box {
+        display: flex;
+        gap: 12px;
+        align-items: flex-start;
+        flex-wrap: wrap;
+      }
+      .suffix-root {
+        min-width: 200px;
+        padding: 12px;
+        border: 1px solid #cfcfcf;
+        border-radius: 8px;
+        background: #f8f8f8;
+      }
+      .suffix-card {
+        width: 144px;
+        box-shadow: var(--box-shadow);
+        border-radius: 8px;
+        overflow: hidden;
+        text-align: center;
+      }
+      .suffix-card .head {
+        background: var(--header-bg);
+        color: var(--blue-600);
+        padding: 8px;
+        font-weight: 700;
+        font-size: 16px;
+      }
+      .suffix-card .val {
+        padding: 12px;
+        font-size: 16px;
+      }
+      .suffix-value {
+        font-weight: 700;
+        font-size: 32px;
+        color: #d9534f;
+        line-height: 30px;
+      }
+
+      .challenge .challenge-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 14px;
+        margin-top: 10px;
+      }
+      .challenge .challenge-item {
+        height: 36px;
+        border-radius: 6px;
+        background: #f3f3f3;
+        border: 1px solid #e6e6e6;
+      }
+
+      .contact-row {
+        font-size: 13px;
+        color: #666;
+        margin-top: 20px;
+        border-top: 1px solid #eee;
+        padding-top: 10px;
+      }
+
+      /* responsive adjustments */
+      @media (max-width: 991.98px) {
+        .page-wrap {
+          padding-left: 40px;
+          padding-right: 40px;
+        }
+      }
+      @media (max-width: 767.98px) {
+        .page-wrap {
+          padding-left: 20px;
+          padding-right: 20px;
+        }
+        .freyer-center-wrap {
+          grid-template-columns: 1fr;
+          padding-bottom: 24px;
+        }
+        .word-oval {
+          position: relative;
+          transform: none;
+          top: auto;
+          left: auto;
+          margin: 12px auto;
+          width: 150px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page-wrap">
+      <div class="top-accent" aria-hidden="true"></div>
+
+      <section class="freyer mb-4">
+        <div class="d-flex justify-content-between align-items-start mb-2">
+          <div>
+            <div class="title-small">Build & Extend Knowledge</div>
+            <div class="title-big">Vocabulary, Word Study, and Morphology</div>
+            <div class="desc">
+              Choose a vocabulary word for the week. Fill out the Freyer Model,
+              using your word. Meet with classmates who did other words and
+              discuss your model.
+            </div>
+          </div>
+
+          <div class="ms-3" style="width: 240px">
+            <div class="right-table">
+              <div class="thead text-center">Quick Definitions</div>
+              <div class="py-2">
+                <div
+                  class="d-flex justify-content-between align-items-start py-1 border-bottom"
+                  style="border-color: #eee"
+                >
+                  <small class="text-muted">adjust</small>
+                  <small class="text-muted">verb</small>
+                </div>
+                <div
+                  class="d-flex justify-content-between align-items-start py-1 border-bottom"
+                  style="border-color: #eee"
+                >
+                  <small class="text-muted">experience</small>
+                  <small class="text-muted">noun</small>
+                </div>
+                <div
+                  class="d-flex justify-content-between align-items-start py-1"
+                >
+                  <small class="text-muted">knowledge</small>
+                  <small class="text-muted">noun</small>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- REPLACED: true 2x2 grid container with centered oval -->
+        <div class="freyer-center-wrap">
+          <div class="fw-box">
+            <label class="label">Definition</label>
+            <textarea placeholder="Type your answer"></textarea>
+          </div>
+
+          <div class="fw-box">
+            <label class="label">Characteristics</label>
+            <textarea placeholder="Type your answer"></textarea>
+          </div>
+
+          <div class="fw-box">
+            <label class="label">Examples</label>
+            <textarea placeholder="Type your answer"></textarea>
+          </div>
+
+          <div class="fw-box">
+            <label class="label">Nonexamples</label>
+            <textarea placeholder="Type your answer"></textarea>
+          </div>
+
+          <input type="text" class="word-box" placeholder="Word" />
+        </div>
+      </section>
+
+      <!-- Noun suffixes section -->
+      <section class="suffixes">
+        <div class="d-flex justify-content-between align-items-start mb-2">
+          <div>
+            <div class="s-title">
+              Noun Suffixes -sion, -sure, -tion, and -ture
+            </div>
+            <div class="subtitle">
+              The noun suffixes -sion, -sure, -tion, and -ture are added to
+              roots to form nouns...
+            </div>
+          </div>
+          <div class="text-end" style="min-width: 160px">
+            <small class="text-muted"
+              >Tip: You’ll likely need to change the spelling of the roots when
+              you add noun suffixes.</small
+            >
+          </div>
+        </div>
+
+        <div class="suffix-box my-2">
+          <div class="suffix-root">
+            <strong>Root or Base (verb)</strong>
+            <ul class="mt-2 mb-0" style="padding-left: 18px">
+              <li>express</li>
+              <li>act</li>
+              <li>close</li>
+              <li>produce</li>
+              <li>move</li>
+            </ul>
+          </div>
+
+          <div class="d-flex gap-3 align-items-center">
+            <div style="text-align: center">
+              <div style="font-weight: 700; font-size: 20px">+</div>
+            </div>
+
+            <div class="suffix-card">
+              <div class="head">Suffix or Ending</div>
+              <div class="val">
+                <div style="font-size: 14px">sion</div>
+                <div style="font-size: 14px">tion</div>
+                <div style="font-size: 14px">sure</div>
+                <div style="font-size: 14px">ture</div>
+              </div>
+            </div>
+
+            <div style="min-width: 220px; padding-left: 8px">
+              <div style="font-size: 14px; margin-bottom: 8px">
+                Example Forms
+              </div>
+              <div style="display: flex; gap: 8px">
+                <div
+                  style="
+                    flex: 1;
+                    padding: 10px;
+                    border-radius: 8px;
+                    background: #fff;
+                    border: 1px solid #eee;
+                    text-align: center;
+                  "
+                >
+                  <div style="font-size: 16px; font-weight: 400">
+                    expression
+                  </div>
+                </div>
+                <div
+                  style="
+                    flex: 1;
+                    padding: 10px;
+                    border-radius: 8px;
+                    background: #fff;
+                    border: 1px solid #eee;
+                    text-align: center;
+                  "
+                >
+                  <div
+                    style="font-size: 16px; font-weight: 700; color: #d9534f"
+                  >
+                    sion
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Write words you built section -->
+        <div class="mt-4">
+          <label class="form-label fw-semibold"
+            >Write two of the words you built. With a partner, use the word
+            parts to define each word. Use a dictionary to confirm your
+            definitions.</label
+          >
+          <div class="row g-2 mt-2">
+            <div class="col-md-6">
+              <input class="form-control" placeholder="Type your word here" />
+            </div>
+            <div class="col-md-6">
+              <input class="form-control" placeholder="Type your word here" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Challenge area -->
+        <div class="challenge mt-4">
+          <div class="d-flex align-items-center mb-2">
+            <span class="badge bg-danger me-2">Challenge</span>
+            <div class="small">
+              Add any other words you know with -sion, -tion, -sure, or -ture.
+            </div>
+          </div>
+          <div class="challenge-grid">
+            <input type="text" class="box" placeholder="Type here" />
+            <input type="text" class="box" placeholder="Type here" />
+            <input type="text" class="box" placeholder="Type here" />
+            <input type="text" class="box" placeholder="Type here" />
+            <input type="text" class="box" placeholder="Type here" />
+            <input type="text" class="box" placeholder="Type here" />
+            <input type="text" class="box" placeholder="Type here" />
+            <input type="text" class="box" placeholder="Type here" />
+            <input type="text" class="box" placeholder="Type here" />
+          </div>
+        </div>
+      </section>
+
+      <div class="contact-row d-flex justify-content-between">
+        <div>www.alphagnito.com | contact@alphagnito.com | +91 63697 36093</div>
+        <div>
+          <a href="http://www.alphagnito.com">http://www.alphagnito.com</a> ·
+          <a href="mailto:contact@alphagnito.com">contact@alphagnito.com</a>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>
